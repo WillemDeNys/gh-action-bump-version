@@ -169,15 +169,12 @@ Toolkit.run(async (tools) => {
     }
 
     const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
-    if (process.env['INPUT_RESET-TAGS'] === 'true') {
-      await tools.runInWorkspace('git', ['tag -d']);
-    }
     if (process.env['INPUT_SKIP-TAG'] !== 'true') {
       await tools.runInWorkspace('git', ['tag', newVersion]);
       await tools.runInWorkspace('git', ['push', remoteRepo, '--follow-tags']);
-      await tools.runInWorkspace('git', ['push', remoteRepo, '--tags']);
+      await tools.runInWorkspace('git', ['push', remoteRepo]);
     } else {
-      await tools.runInWorkspace('git', ['push', remoteRepo, '-f']);
+      await tools.runInWorkspace('git', ['push', remoteRepo]);
     }
   } catch (e) {
     tools.log.fatal(e);
