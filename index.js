@@ -170,7 +170,7 @@ Toolkit.run(async (tools) => {
 
     const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
     if (process.env['INPUT_RESET-TAGS'] === 'true') {
-      await tools.runInWorkspace('git', ['tag', remoteRepo, '-d $(git tag -l)']);
+      await tools.runInWorkspace('git', ['tag', remoteRepo, '-d']);
     }
     if (process.env['INPUT_SKIP-TAG'] !== 'true') {
       await tools.runInWorkspace('git', ['tag', newVersion]);
